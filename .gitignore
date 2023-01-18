@@ -3,3 +3,5 @@
 **.cov
 
 docs/build/**
+
+.vscode
