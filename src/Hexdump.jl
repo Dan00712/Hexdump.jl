@@ -4,6 +4,23 @@ export hexdump
 
 const AbstractStrOrIO = Union{AbstractString, IO}
 
+
+"""
+    hexdump([output = stdout,] input, offset = 0, line_count = :all)
+
+        output      ::Union{IO, AbstractString}
+        intput      ::Union{IO, AbstractString}
+        offset      ::Int
+        line_count  ::Union{Symbol, Int}
+
+The `hexdump` functions reads the raw bytes of `input` and prints the hexdump output to `output`, which defaults to stdout. 
+`input` can be a subtype of IO or point to a file, which will be used as the source. 
+`output` may also be a subtype of IO or point to a file, if the file is not present it will be created.  
+
+When reading the function will skip `offset` bytes, before actualy printing to `output`.  
+If `line_count` is set to `:all` the `hexdump` function will not stop until eof is reached,
+when setting `line_count` to an integer, the function will also stop after `line_count` lines have been printed.
+"""
 hexdump(input::AbstractStrOrIO, offset::Int = 0, line_count = :all)::Nothing = hexdump(stdout, input, offset, line_count)
 
 function hexdump(output::IO, input::IO, )::IO
@@ -55,7 +72,7 @@ function hexdump(output::IO, f::IO, offset::Int, line_count::Int)::IO
     return output
 end
 
-#= Utiliy functions that are delegated to =#
+#= Utility functions that are delegated to =#
 
 function __print_line(out::IO, adr::Integer, bytes::Vector{UInt8})::Nothing
     __print_adrexprefix(out, adr)
