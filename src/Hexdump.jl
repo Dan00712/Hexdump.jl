@@ -6,7 +6,7 @@ const AbstractStrOrIO = Union{AbstractString, IO}
 
 hexdump(input::AbstractStrOrIO, offset::Int = 0, line_count = :all)::Nothing = hexdump(stdout, input, offset, line_count)
 
-function hexdump(output::IO, input::IO)::IO
+function hexdump(output::IO, input::IO, )::IO
     return hexdump(output, input, 0, :all)
 end
 
@@ -24,7 +24,8 @@ function hexdump(output::IO, input::AbstractString, offset::Int=0, line_count = 
     return output
 end
 
-function hexdump(output::IO, f::IO, offset::Int, line_count::Symbol)::IO
+
+function hexdump(output::IO, f::IO, offset::Int, line_count::Symbol = :all)::IO
     read(f, offset)
         
     position = offset
